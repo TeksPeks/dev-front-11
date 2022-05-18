@@ -7,7 +7,7 @@
     <br /><br />
     b: <input type="text" id="b"/>
     <br /><br />
-    result: <span id="total">?</span>
+    result: <span id="result">?</span>
     <br /><br />
     <button onclick="add()">Add</button>
     <script type="text/javascript">
@@ -31,7 +31,7 @@
                 }),
             });
             const response = await initialResponse.json();
-            document.getElementById('total').innerText = response.total;
+            document.getElementById('result').innerText = response.total;
         }
     </script>
 </body>
