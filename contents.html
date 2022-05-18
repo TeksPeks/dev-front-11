@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Playing with numbers</title>
+</head>
+<body>
+    a: <input type="text" id="a"/>
+    <br /><br />
+    b: <input type="text" id="b"/>
+    <br /><br />
+    result: <span id="total">?</span>
+    <br /><br />
+    <button onclick="add()">Add</button>
+    <script type="text/javascript">
+        function getNumbers() {
+            return [
+                Number(document.getElementById('a').value),
+                Number(document.getElementById('b').value),
+            ];
+        }
+
+        async function add() {
+            const [a, b] = getNumbers();
+            const initialResponse = await fetch(`/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    a: a,
+                    b: b,
+                }),
+            });
+            const response = await initialResponse.json();
+            document.getElementById('total').innerText = response.total;
+        }
+    </script>
+</body>
+</html>
