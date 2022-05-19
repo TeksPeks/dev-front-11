@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, Response
+import functools
 
 app = Flask(__name__)
 
@@ -12,7 +13,24 @@ def index() -> str:
 @app.route('/add', methods=['POST'])
 def add() -> Response:
     data = request.get_json()
-    total = data['a'] + data['b']
     return jsonify(
-        total=total,
+        total=sum(data),
+    )
+
+
+@app.route('/multiply', methods=['POST'])
+def multiply() -> Response:
+    data = request.get_json()
+    product = functools.reduce(lambda a, b: a*b, data)
+    return jsonify(
+        product=product,
+    )
+
+
+@app.route('/minmax', methods=['POST'])
+def minmax() -> Response:
+    data = request.get_json()
+    return jsonify(
+        min=min(data),
+        max=max(data),
     )

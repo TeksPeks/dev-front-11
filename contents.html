@@ -7,31 +7,63 @@
     <br /><br />
     b: <input type="text" id="b"/>
     <br /><br />
-    result: <span id="result">?</span>
+    b: <input type="text" id="c"/>
+    <br /><br />
+    total: <span id="add-result">?</span>
+    <br /><br />
+    product: <span id="multiply-result">?</span>
+    <br /><br />
+    min: <span id="min">?</span>
+    <br /><br />
+    max: <span id="max">?</span>
     <br /><br />
     <button onclick="add()">Add</button>
+    <button onclick="multiply()">Multiply</button>
+    <button onclick="minmax()">Get min and max values</button>
     <script type="text/javascript">
         function getNumbers() {
             return [
                 Number(document.getElementById('a').value),
                 Number(document.getElementById('b').value),
+                Number(document.getElementById('c').value),
             ];
         }
 
         async function add() {
-            const [a, b] = getNumbers();
             const initialResponse = await fetch(`/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    a: a,
-                    b: b,
-                }),
+                body: JSON.stringify(getNumbers()),
             });
             const response = await initialResponse.json();
-            document.getElementById('result').innerText = response.total;
+            document.getElementById('add-result').innerText = response.total;
+        }
+
+        async function multiply() {
+            const initialResponse = await fetch(`/multiply`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(getNumbers()),
+            });
+            const response = await initialResponse.json();
+            document.getElementById('multiply-result').innerText = response.product;
+        }
+
+        async function minmax() {
+            const initialResponse = await fetch(`/minmax`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(getNumbers()),
+            });
+            const response = await initialResponse.json();
+            document.getElementById('min').innerText = response.min;
+            document.getElementById('max').innerText = response.max;
         }
     </script>
 </body>
